@@ -1,0 +1,62 @@
+name: BLOCKERS 
+on:
+  schedule:
+    - cron: '0 2-14/3 * * 1-5'
+
+jobs:
+  metrcis-gathering:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:                       
+        include:
+          - application: ALPHA         
+            project: ALPHA  
+            jira-api: https://vamsiinduri4455.atlassian.net/rest/api/3
+            jira-user: JIRA_USER
+            jira-key: JIRA_API_TOKEN
+          - application: BETA         
+            project: BETA  
+            jira-api: https://vamsiinduri4455.atlassian.net/rest/api/3
+            jira-user: JIRA_USER
+            jira-key: JIRA_API_TOKEN
+          - application: OMICRON         
+            project: OMICRON  
+            jira-api: https://vamsiinduri4455.atlassian.net/rest/api/3
+            jira-user: JIRA_USER
+            jira-key: JIRA_API_TOKEN
+          - application: DELTA         
+            project: DELTA  
+            jira-api: https://vamsiinduri4455.atlassian.net/rest/api/3
+            jira-user: JIRA_USER
+            jira-key: JIRA_API_TOKEN
+          - application: ETA         
+            project: ETA  
+            jira-api: https://vamsiinduri4455.atlassian.net/rest/api/3
+            jira-user: JIRA_USER
+            jira-key: JIRA_API_TOKEN    
+
+    container:
+      image: node:latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Blocker
+        run: npm run Blocker
+        env:
+          APPLICATION: ${{ matrix.application }}
+          DD_METRIC_PREFIX: METRICS
+          JIRA_API: ${{ matrix.jira-api }}
+          JIRA_USER: ${{ secrets[matrix.jira-user] }}
+          JIRA_KEY: ${{ secrets[matrix.jira-key] }} 
+          PROJECT: ${{ matrix.project }}
+          COMPONENT: ${{ matrix.component }}
+
+      - name: give some time to publish metrics
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '30s'            

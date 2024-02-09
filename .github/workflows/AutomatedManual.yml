@@ -1,0 +1,71 @@
+name: Automated and Manual Metrics
+on:
+  schedule:
+    - cron: '0 2-14/3 * * 1-5'
+    
+jobs:
+  metrcis-gathering:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - application: ALPHA         
+            project: ALPHA  
+            testrail-api: https://khanaasif.testrail.io/index.php?/api/v2
+            testrail-user: TESTRAIL_USER
+            testrail-key: TESTRAIL_KEY
+
+          - application: BETA         
+            project: BETA  
+            testrail-api: https://dashboardnew.testrail.io/index.php?/api/v2
+            testrail-user: TESTRAIL_USER
+            testrail-key: TESTRAIL_KEY
+
+          - application: DELTA         
+            project: DELTA  
+            testrail-api: https://dashboardnew.testrail.io/index.php?/api/v2
+            testrail-user: TESTRAIL_USER
+            testrail-key: TESTRAIL_KEY   
+
+          - application: OMICRON         
+            project: OMICRON  
+            testrail-api: https://dashboardnew.testrail.io/index.php?/api/v2
+            testrail-user: TESTRAIL_USER
+            testrail-key: TESTRAIL_KEY  
+
+          - application: ETA         
+            project: ETA  
+            testrail-api: https://dashboardnew.testrail.io/index.php?/api/v2
+            testrail-user: TESTRAIL_USER
+            testrail-key: TESTRAIL_KEY  
+
+              
+    
+            
+
+    container:
+      image: node:latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Test
+        run: npm run Dash
+        continue-on-error: true
+        env:
+          APPLICATION: ${{ matrix.application }}
+          
+          TESTRAIL_API:  ${{ matrix.testrail-api }}
+          TESTRAIL_USER: ${{ secrets[matrix.testrail-user] }}
+          TESTRAIL_KEY: ${{ secrets[matrix.testrail-key] }}
+          PROJECT: ${{ matrix.project }}
+      
+
+      - name: give  some time to publish metrics
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '30s'

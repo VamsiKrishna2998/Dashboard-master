@@ -1,0 +1,8 @@
+{
+
+    "openbugs": "AND issuetype = bug and status not in ('Closed', 'done', 'resolved', 'Done')",
+    "bugsperreleasejql": "AND issuetype = bug AND fixVersion = latestReleasedVersion()",
+    "ticketsperreleasejql": "AND issuetype = Story AND fixVersion = latestReleasedVersion()",
+    "backlogjql":"AND issuetype in ('Story','Bug') AND status in ('To Do', 'Open') AND Sprint is EMPTY",
+    "blocklistjql":"AND issuetype = 'Bug' AND priority = Highest AND status != Done"
+  }

@@ -1,0 +1,36 @@
+{
+  "name": "newdashboardpackage",
+  "version": "1.2.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "Dash": "node ./src/Metrics/AutomatedManual.js",
+    "Dash2": "node ./src/Metrics/passfail.js",
+    "Openbug": "node ./src/Metrics/Jiraopenbugs.js",
+    "BugRelease": "node ./src/Metrics/bugsperreleases.js",
+    "backlog": "node ./src/Metrics/backlog.js",
+    "Blocker": "node ./src/Metrics/blockers.js",
+    "TICKETSPERRELEASE": "node ./src/Metrics/ticketsperrelease.js",
+    "Dash3": "node ./src/Metrics/passfail2.js",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "axios": "^1.5.1",
+    "dotenv": "^16.3.1",
+    "webpack": "^5.90.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "axios-logger": "^2.7.0",
+    "crypto": "^1.0.1",
+    "git": "^0.1.5",
+    "hot-shots": "^10.0.0",
+    "newdashboardpackage": "^1.2.0",
+    "node-polyfill-webpack-plugin": "^3.0.0",
+    "testrailmetrics": "^1.1.9"
+  }
+}
